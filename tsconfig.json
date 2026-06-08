@@ -33,7 +33,7 @@
         "./testdata/*"
       ],
         "@reports/*": [
-          "./reports/*"
+          "./playwright-report/*"
         ]
     }
   }
