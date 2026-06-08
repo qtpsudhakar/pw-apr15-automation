@@ -31,7 +31,10 @@
       ],
        "@testdata/*": [
         "./testdata/*"
-      ]
+      ],
+        "@reports/*": [
+          "./reports/*"
+        ]
     }
   }
 }
