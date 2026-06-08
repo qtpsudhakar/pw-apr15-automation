@@ -53,13 +53,13 @@ export default defineConfig({
       // testMatch: 'POMTestSerialMode.spec.ts'
       // testMatch: 'POMWithDDT.spec.ts'
     },
-    // {
-      //https://playwright.dev/docs/test-projects#configure-projects-for-multiple-environments
-      // name: 'opensource',
-      // use: {
-      //   baseURL: 'https://opensource-demo.orangehrmlive.com/',
-      //   ...devices['Desktop Chrome']
-      // },
-    // }
+    {
+      // https://playwright.dev/docs/test-projects#configure-projects-for-multiple-environments
+      name: 'opensource',
+      use: {
+        baseURL: 'https://opensource-demo.orangehrmlive.com/',
+        ...devices['Desktop Chrome']
+      },
+    }
   ],
 });
