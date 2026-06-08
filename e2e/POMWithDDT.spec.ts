@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
-import { fTest as test } from "../fixture/basetest";
+import { fTest as test } from "@fixtures/basetest";
 // import appCredentials from '../testdata/appcredentials.json';
 // import employeeData from '../testdata/Employees.json';
-import * as data from '../testdata/index';
+import * as data from '@testdata/index';
 
 // test is used define tests
 // expect is used create assertions

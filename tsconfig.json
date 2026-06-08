@@ -28,6 +28,9 @@
       ],
        "@fixtures/*": [
         "./fixture/*"
+      ],
+       "@testdata/*": [
+        "./testdata/*"
       ]
     }
   }
