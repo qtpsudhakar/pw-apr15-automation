@@ -1,12 +1,12 @@
 //Worker level
 
 import { test as base, BrowserContext, Page } from "@playwright/test";
-import { BasePage } from "../pages/basepage";
-import DashboardPage from "../pages/dashboardpage";
-import LoginPage from "../pages/loginpage";
-import PersonalDetailsPage from "../pages/personaldetailspage";
-import PIMPage from "../pages/pimpage";
-import AddEmployeePage from "../pages/addemppage";
+import { BasePage } from "@pages/basepage";
+import DashboardPage from "@pages/dashboardpage";
+import LoginPage from "@pages/loginpage";
+import PersonalDetailsPage from "@pages/personaldetailspage";
+import PIMPage from "@pages/pimpage";
+import AddEmployeePage from "@pages/addemppage";
 
 // Extend the base test with passing pageobjects to all tests in the worker scope (before all tests in the worker starts and after all tests in the worker ends)
 
