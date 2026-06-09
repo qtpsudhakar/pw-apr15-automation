@@ -58,6 +58,15 @@ jobs:
         else
           echo "No previous history found — first run baseline"
         fi
+    - name: Setup Java (required by Allure)
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+    - name: Install Allure Commandline
+      if: always()
+      run: |
+        npm install -g allure-commandline@2.13.9
     # ─── Generate Allure Report ───────────────────────────────────────────────
 
     - name: Generate Allure HTML report
