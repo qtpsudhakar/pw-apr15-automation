@@ -26,9 +26,9 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   // workers: 4,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html', { outputFolder: 'my-report' }],
-    ['allure-playwright', { outputFolder: 'allure-results', detail: true, suiteTitle: true }],
-],
+  reporter: [['html', { outputFolder: "playwright-report" }],
+  ['allure-playwright', { outputFolder: 'allure-results', detail: true, suiteTitle: true }],
+  ],
   outputDir: `${runOutputDir}/artifacts`,
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -52,7 +52,7 @@ export default defineConfig({
       use: {
         baseURL: 'https://vibetestq-osondemand.orangehrm.com/',
         ...devices['Desktop Chrome'],
-        
+
       },
       // grep: "@ind", // to run tests with @ind tag
       // testMatch: 'POMTestSerialMode.spec.ts'
