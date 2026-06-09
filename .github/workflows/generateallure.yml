@@ -58,7 +58,6 @@ jobs:
         else
           echo "No previous history found — first run baseline"
         fi
-
     # ─── Generate Allure Report ───────────────────────────────────────────────
 
     - name: Generate Allure HTML report
@@ -72,10 +71,8 @@ jobs:
       run: |
         mkdir -p gh-pages-deploy/allure
         cp -r allure-report/. gh-pages-deploy/allure/
-
         mkdir -p gh-pages-deploy/latest
         cp -r playwright-report/. gh-pages-deploy/latest/
-
         cat > gh-pages-deploy/index.html << 'EOF'
         <!DOCTYPE html>
         <html lang="en">
@@ -110,7 +107,6 @@ jobs:
         </body>
         </html>
         EOF
-
     - name: Publish Allure report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       if: always()
@@ -121,7 +117,6 @@ jobs:
         keep_files: true
         commit_message: |
           Allure report — run ${{ github.run_number }}
-
     # ─── Upload artifacts as backup ───────────────────────────────────────────
 
     - name: Upload Playwright HTML report
