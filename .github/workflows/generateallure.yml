@@ -62,7 +62,7 @@ jobs:
     # ─── Generate Allure Report ───────────────────────────────────────────────
 
     - name: Generate Allure HTML report
-      run: npx allure generate npx allure generate ./allure-results -o ./allure-report --clean
+      run: npx allure generate ./allure-results -o ./allure-report --clean
       if: always()
 
     # ─── Publish to GitHub Pages ──────────────────────────────────────────────
