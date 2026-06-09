@@ -69,9 +69,25 @@ jobs:
         npm install -g allure-commandline@2.13.9
     # ─── Generate Allure Report ───────────────────────────────────────────────
 
-    - name: Generate Allure HTML report
-      run: npx allure generate allure-results --clean -o allure-report
+    - name: Verify Java and Allure
       if: always()
+      run: |
+        echo "=== java version ==="
+        java -version || true
+        echo "=== node/npm versions ==="
+        node --version
+        npm --version
+        echo "=== allure on PATH ==="
+        if command -v allure >/dev/null 2>&1; then
+          which allure || true
+          allure --version || true
+        else
+          echo "allure not found on PATH"
+        fi
+
+    - name: Generate Allure HTML report
+      if: always()
+      run: npx -p allure-commandline@2.13.9 -c "allure generate allure-results --clean -o allure-report"
 
     # ─── Publish to GitHub Pages ──────────────────────────────────────────────
 
