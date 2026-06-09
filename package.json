@@ -22,7 +22,7 @@
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
     "allure-playwright": "^3.9.0",
-    "allure-commandline": "^2.38.0"
+    "allure-commandline": "^2.42.0"
   },
   "paths": {
     "@pages": "./pages",
