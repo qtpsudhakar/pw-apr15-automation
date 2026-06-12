@@ -1,42 +1,38 @@
 import { setWorldConstructor, World, IWorldOptions } from '@cucumber/cucumber';
 import { Browser, BrowserContext, Page, chromium } from '@playwright/test';
-import { BasePage } from '@pages/BasePage';
-import { LoginPage } from '@pages/LoginPage';
-import { DashboardPage } from '@pages/DashboardPage';
-import { AddEmployeePage } from '@pages/AddEmployeePage';
-import { EmployeeListPage } from '@pages/EmployeeListPage';
-import { PIMPage } from '@pages/PIMPage';
-import { EmployeeProfilePage } from '@pages/EmployeeProfilePage';
+import { BasePage } from '../../pages/basepage';
+import LoginPage from '../../pages/loginpage';
+import DashboardPage from '../../pages/dashboardpage';
+import AddEmployeePage from '../../pages/addemppage';
+import PIMPage from '../../pages/pimpage';
+import PersonalDetailsPage from '../../pages/personaldetailspage';
 
 export interface CustomWorld extends World {
   browser?: Browser;
   context?: BrowserContext;
   page?: Page;
-  
+
   // Page objects - always available after init()
   basePage: BasePage;
   loginPage: LoginPage;
   dashboardPage: DashboardPage;
   addEmployeePage: AddEmployeePage;
-  employeeListPage: EmployeeListPage;
   pimPage: PIMPage;
-  employeeProfilePage: EmployeeProfilePage;
+  personalDetailsPage: PersonalDetailsPage;
 }
 
 export class CustomPlaywrightWorld extends World implements CustomWorld {
   browser?: Browser;
   context?: BrowserContext;
   page?: Page;
-  
+
   // Page objects - declare as definite assignment
   basePage!: BasePage;
   loginPage!: LoginPage;
   dashboardPage!: DashboardPage;
   addEmployeePage!: AddEmployeePage;
-  employeeListPage!: EmployeeListPage;
   pimPage!: PIMPage;
-  employeeProfilePage!: EmployeeProfilePage;
-
+  personalDetailsPage!: PersonalDetailsPage;
   constructor(options: IWorldOptions) {
     super(options);
   }
@@ -45,15 +41,14 @@ export class CustomPlaywrightWorld extends World implements CustomWorld {
     this.browser = await chromium.launch({ headless: false });
     this.context = await this.browser.newContext();
     this.page = await this.context.newPage();
-    
+
     // Initialize page objects - same pattern as basetest.ts
     this.basePage = new BasePage(this.page);
     this.loginPage = new LoginPage(this.page);
     this.dashboardPage = new DashboardPage(this.page);
     this.addEmployeePage = new AddEmployeePage(this.page);
-    this.employeeListPage = new EmployeeListPage(this.page);
     this.pimPage = new PIMPage(this.page);
-    this.employeeProfilePage = new EmployeeProfilePage(this.page);
+    this.personalDetailsPage = new PersonalDetailsPage(this.page);
   }
 
   async cleanup(): Promise<void> {
