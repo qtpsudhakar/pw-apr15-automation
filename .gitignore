@@ -9,3 +9,5 @@ node_modules/
 allure-report
 allure-results
 my-report
+cucumber-report.html
+cucumber-report.json
