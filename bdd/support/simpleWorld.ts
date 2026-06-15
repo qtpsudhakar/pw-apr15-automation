@@ -1,59 +1,59 @@
-import { setWorldConstructor, World, IWorldOptions } from '@cucumber/cucumber';
-import { chromium, expect } from '@playwright/test';
-import type { Browser, BrowserContext, Page } from '@playwright/test';
+import { World, IWorldOptions, setWorldConstructor } from '@cucumber/cucumber';
+import { Browser, BrowserContext, Page, chromium } from 'playwright';
+import { expect as baseExpect } from '@playwright/test';
 
-export interface SimpleWorld extends World {
-  browser?: Browser;
-  context?: BrowserContext;
-  page?: Page;
-}
-
-export class SimplePlaywrightWorld extends World implements SimpleWorld {
-  browser?: Browser;
-  context?: BrowserContext;
-  page?: Page;
+let browser: Browser;
+  
+export class PSWorld extends World {
+  private _page?: Page;
+  private _context?: BrowserContext;
+  baseUrl: string;
 
   constructor(options: IWorldOptions) {
     super(options);
+    this.baseUrl = (options.parameters as any).baseUrl ?? process.env.AUT_BASE_URL ?? '';
   }
 
-  async init(): Promise<void> {
-    this.browser = await chromium.launch({ 
-      headless: false,
-      slowMo: 500 // Optional: slow down actions for better visibility
-    });
-    this.context = await this.browser.newContext();
-    this.page = await this.context.newPage();
+  async initPlaywright(): Promise<void> {
+    const b = await getBrowser();
+    this._context = await b.newContext({ baseURL: this.baseUrl });
+    this._page = await this._context.newPage();
+    // ── Playwright timeouts ──────────────────────────────────
+    this.page.setDefaultTimeout(30000);           // action timeout — click, fill, etc.
+    this.page.setDefaultNavigationTimeout(60000); // goto, waitForNavigation
   }
-
-  async cleanup(): Promise<void> {
-    if (this.page) {
-      await this.page.close();
-    }
-    if (this.context) {
-      await this.context.close();
-    }
-    if (this.browser) {
-      await this.browser.close();
+  async closeContext(): Promise<void> {
+    if (this._context) {
+      await this._context.close();
+      this._context = undefined;
+      this._page = undefined;
     }
   }
 
-  // Helper method to navigate
-  async navigateTo(url: string): Promise<void> {
-    if (!this.page) {
-      throw new Error('Page not initialized. Call init() first.');
-    }
-    await this.page.goto(url);
+  get page(): Page {
+    if (!this._page) throw new Error('Playwright page is not initialized. Call initPlaywright() in Before hook.');
+    return this._page;
   }
 
-  // Helper method for waiting
-  async waitForPageLoad(): Promise<void> {
-    if (!this.page) {
-      throw new Error('Page not initialized. Call init() first.');
-    }
-    await this.page.waitForLoadState('load');
+  get context(): BrowserContext {
+    if (!this._context) throw new Error('Playwright context is not initialized. Call initPlaywright() in Before hook.');
+    return this._context;
   }
 }
 
-// Enable this line when using Simple approach (no POM)
-// setWorldConstructor(SimplePlaywrightWorld);
+setWorldConstructor(PSWorld);
+
+export async function getBrowser(): Promise<Browser> {
+  if (!browser) {
+    const headlessEnv = process.env.HEADLESS; // 'true' or 'false'
+    const headless = typeof headlessEnv === 'string' ? headlessEnv === 'true' : false; // default headed (headless=false)
+    browser = await chromium.launch({ headless });
+  }
+  return browser;
+}
+
+export async function closeBrowser(): Promise<void> {
+  if (browser) await browser.close();
+}
+
+export const expect = baseExpect.configure({ timeout: 10000 });

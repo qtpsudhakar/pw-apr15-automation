@@ -4,7 +4,12 @@ module.exports = {
   default: {
     // Feature files location
     paths: ['bdd/features/**/*.feature'],
-    require: ['bdd/steps/empmanagement.steps.ts'],
+    require: [
+      'bdd/support/simpleWorld.ts',
+      'bdd/support/hooks.ts',
+      'bdd/steps/**/*.steps.ts',
+    ],
+
     // Step definitions location
     // CHOOSE ONE OF THESE APPROACHES:
     
@@ -24,6 +29,7 @@ module.exports = {
     
     // Format options
     format: [
+      'pretty',
       'html:cucumber-report.html',
       'json:cucumber-report.json',
       // '@cucumber/pretty-formatter'
@@ -40,8 +46,8 @@ module.exports = {
     
     // Retry failed scenarios
     retry: 0,
-    defaultTimeout: 120000, // 120 seconds
     timeout: 120000, // 120 seconds
+    deafaultTimeout: 120000, // 120 seconds
     // Exit after first failure (optional)
     // failFast: true,
   }

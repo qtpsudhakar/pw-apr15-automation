@@ -15,6 +15,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@cucumber/pretty-formatter": "^4.0.0",
     "@faker-js/faker": "^10.4.0",
     "@ngneat/falso": "^8.0.2",
     "@playwright/test": "^1.60.0",
