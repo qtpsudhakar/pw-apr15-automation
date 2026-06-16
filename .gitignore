@@ -11,3 +11,4 @@ allure-results
 my-report
 cucumber-report.html
 cucumber-report.json
+.playwright-cli/
